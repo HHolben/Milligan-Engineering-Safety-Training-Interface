@@ -4,6 +4,9 @@
 #include <string>
 #include <time.h>
 using namespace std;
+// Be sure to delete you old repository.
+// String and calculation OK
+
 
 //Start Main function
 
@@ -66,6 +69,7 @@ int main()
 					// training array: {0: solder trained? 1 or 0, 1: Month solder trained, 2: Day solder trained, 3: Year solder trained, 4: toolbox trained?, 5: Month toolbox trained, 6: Day toolbox trainined, 7: Year toolbox trained}
 		//if (studentname = 'Bob'){
 			int Training[8] = { 1, 1, 20, 2019, 0, 0, 0, 0 };
+			// Go ahead and set up some test data at the start of the program
 
 			if (Training[0] == 1) {
 				int MonthsElapsedSinceSolderTraining = ((Today[1]) * 12 + Today[0]) - (Training[1] * 12 + Training[0]);
