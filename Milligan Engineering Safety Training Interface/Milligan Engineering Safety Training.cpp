@@ -5,6 +5,16 @@ Description: A convenient interface that will allow Milligan College Engineering
 Most recent changes made on: 7 February 2019
 */
 
+/*
++ Utilize an if statement
++ Utilize a multi-level if and/or a while statement.
++ Be properly indented.
++ Has a header comment.
++ Have comments for non-obvious operations.
+~ Utilizes a named constant. Need to use constant in declaration of StudentNamesArray (line 96ish)
++ Utilizes an array.
+*/
+
 //set up
 #include <iostream>
 #include <string>
@@ -15,12 +25,12 @@ using namespace std;
 int main()
 {
 
-	// Declare some variables
+	// Declare some variables **** For now collect all the variables and constants you are using globally up here
 	int option1;
 	string studentname;
 	string trainingname;
 	int reboot;
-
+	
 
 	//Identify Today's Date
 
@@ -36,9 +46,9 @@ int main()
 
 	// Get Loopy
 
-	bool GetL00py;
+	bool GetL00py; //Genenarlly you do not need a separate boolean vairable. Use a statement that contains a boolean experession like while (reboot != 1)
 	GetL00py = true;
-	while (GetL00py == true)
+	while (GetL00py == true) // Could also just say while (GetL00py)
 	{
 
 
