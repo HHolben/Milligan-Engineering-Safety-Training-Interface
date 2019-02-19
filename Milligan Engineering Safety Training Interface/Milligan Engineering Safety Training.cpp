@@ -6,7 +6,8 @@ Most recent changes made on: 15 February 2019
 */
 
 //set up
-
+// Need to validate menu inputs. Consider using switch statement with option validated in while loop.
+//Clean up code interspersed with declarations.
 #include <iostream>
 #include <string>
 #include <ctime>
