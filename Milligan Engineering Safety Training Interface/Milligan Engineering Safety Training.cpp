@@ -35,9 +35,9 @@ int main()
 	//Identify Today's Date
 
 	int Today[3] = { 2, 9, 2019 };
-
+	double now = time(NULL);
 	/*
-	time_t now = time(NULL);
+	
 	tm nowtm=*(gmtime(&now));
 
 	cout <<"Year =" << (timePtr->tm_year);
