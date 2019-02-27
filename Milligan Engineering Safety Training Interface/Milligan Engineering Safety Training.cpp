@@ -2,66 +2,44 @@
 Project Name: Milligan Engineering Safety Training Interface
 Author: Henry Holben
 Description: A convenient interface that will allow Milligan College Engineering proffessors to check for students' lab equipment safety training
-Most recent changes made on: 15 February 2019
+Most recent changes made on: 24 February 2019
 */
 
 //set up
-
 #include <iostream>
 #include <string>
-#include <ctime>
+#include <time.h>
 using namespace std;
+
+//Declare some global variables for the main function
+
+int ThisYearInt;
+float CurrentSemester;
+
+
+//Programmer Defined Function Prototypes
+
+int YearTimeFinder(int (TimePar));
+//Precondition: Uses Time(Null), the number of seconds since 0:00 January 1 1970.
+//Postconidtion: Gives the current year (will later give day, month, and year)
 
 //Start Main function
 int main()
 {
 
-	// Declare some variables
-	int option1;
-	int studentnumber;
-	string studentname;
-	string trainingname;
-	int TrainingNumber;
-	int reboot;
 
 
-	//Identify Today's Date
-
-	double Today[3] = { 2, 15, 2019 };
-/*	double now = time(NULL);*/
-
-	float CurrentSemester = 2019.0;
-
-	/*
-	time_t now = time(NULL);
-	tm nowtm=*(gmtime(&now));
-
-	cout <<"Year =" << (timePtr->tm_year);
-
-
-
-	//Seconds since 12:00 AM 1 / 1 / 1970 Convert from day, month, year
-
-	int daysinmonth[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	int yearVal, monthVal, day, val;
-	double Time;
-	Time += (yearVal - 1970) * 365;
-	Time = (yearVal - 1970) / 4;
-	for (int i=, i < month, i++);
-	{
-		time_t = days[inmonth[i]];
-	}
-	int timet=day;
-	Time = timet * 24 * 60 * 60;
-
-	*/
+	//Say what day it is
+	int YearTimeFinder(time(NULL));
+	cout << "Today's date is:" << ThisYearInt;
+	cout << "\n";
 
 	// StudentProfiles
-
 	const int NumberOfStudents = 10; //we will use this to identify 9 students
 	int StudentNumbersArray[NumberOfStudents] = { 0, 1, 2, 3,4, 5, 6, 7, 8, 9 };
 	string StudentNamesArray[NumberOfStudents] = { "Brutus Buffalo", "Bob", "Sue", "Joe" };
 	//Trainings:
+
 
 	//Uses .5 for fall, 0.3 for Summer, and .0 for spring semesters
 
@@ -77,35 +55,51 @@ int main()
 	float SawCircular[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Circular Saw
 	float Solder[NumberOfStudents] = { 0, 2018.5, 2018.0 }; // Soldering and Crimping
 
+	//Title
+	cout << "_____________________________________________\n";
+	cout << "Milligan Engineering Safety Training Database\n";
+	cout << "_____________________________________________\n \n";
+	
 	// Get Loopy
-
 	bool GetL00py;
 	GetL00py = true;
 	while (GetL00py)
 	{
-		// Reset Variables
+		// Declare some variables for the loop
+		int option1=0;
+		int studentnumber;
+		string studentname;
+		string trainingname;
+		int TrainingNumber;
+		int reboot;
 
-		option1 = 0;
-		reboot = 0;
-
-		// decide whether we are looking for students or for training
+		// Home menu: decide whether we are looking for students or for training
+		cout << "-----------Home Menu----------- \n \n";
 		cout << "Students or Training?";
 		cout << "\n Students \t 1";
 		cout << "\n Training \t 2";
 		cout << "\n Quit \t \t 3 \n \n";
+		cout << "------------------------------- \n";
 		cin >> option1;
+
+		//But what if the user enters the wrong value type?
+
+	
+		
+
 
 		//Let's find some students
 
 		if (option1 == 1) {
-			cout << "Who are you looking for?";
+			cout << "--------------Students-------------- \n";
+			cout << "\n \n Who are you looking for? \n";
 			cin >> studentname;
-			cout << "\n \n You are looking for training completed by " << studentname << ".";
+			cout << "\n \n You are looking for training completed by " << studentname << ". \n";
 
 			// Relate input name to a number
 
-			
-			for (int NameSearchIteration = 0;NameSearchIteration <= NumberOfStudents;NameSearchIteration++)
+			int NameSearchIteration;
+			for (NameSearchIteration = 0;NameSearchIteration <= NumberOfStudents;NameSearchIteration++)
 			{
 				if (StudentNamesArray[NameSearchIteration] == studentname)
 				{
@@ -113,6 +107,11 @@ int main()
 					cout << "\n" << studentname << " is student number " << studentnumber;
 				}
 			};
+			if (NameSearchIteration > NumberOfStudents)
+			{
+				"No student was found by that name.";
+				GetL00py = false;
+			}
 
 			//Check for Student's Training
 
@@ -130,32 +129,11 @@ int main()
 				cout << "\n" << studentname << " was never trained in 3d Printing at Milligan. \n";
 			}
 
-			// turn that student name into an ascii number
-
-			
-			cout << "\n \n" << studentname << "'s name in ASCII characters is: ";
-			for (int NameLetterNumber = 0; studentname[NameLetterNumber] > 32; NameLetterNumber++)
-			{
-				int ASCIIcharacter = studentname[NameLetterNumber];
-				cout << ASCIIcharacter;
-			};// the obvious problem to fix here is that a space entered in the name will stop the program in the middle of a full name
-			cout << studentname << "\t has completed \t";
-
-			// Restart
-
-			cout << "\n \n Enter any any character to Restart \n";
-			cin >> reboot;
-			if (reboot = 1) {
-				GetL00py = false;
-			}
-			else {
-				GetL00py = false;
-			}
+			cout << studentname << "\t has completed \t \n \n \n";
 		}
-		else {
-
 			//let's see who's trained
-			if (option1 == 2) {
+		if (option1 == 2) {
+				cout << "--------------Training-------------- \n";
 				cout << "What training are you interested in? \n";
 				cout << "\n \t 3d Printing \t 1";
 				cout << "\n \t Drill Press \t 2";
@@ -163,14 +141,14 @@ int main()
 				cout << "\n \t Band saw \t 4";
 				cout << "\n \t Circular saw \t 5";
 				cout << "\n \t Soldering and crimping \t 6 \n \n";
+				cout << "------------------------------------ \n";
 				cin >> TrainingNumber;
 
-				//soldering
+				//3d printing
 				if (TrainingNumber = 1)
 				{
 					// Find students with current 3d printing training
 					cout << "\t Students with current training in 3d printing: \n \n";
-					
 					for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
 					{
 						if (ThreeDPrint[StudentSearchIteration] == CurrentSemester)
@@ -179,7 +157,7 @@ int main()
 							cout << "\n";
 						};
 					};
-					//Find students with expired soldering training
+					//Find students with expired 3d-printing training
 					cout << "\t Students with outdated training in 3d printing: \n \n";
 					for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
 					{
@@ -195,12 +173,51 @@ int main()
 					};
 				};
 			}
-			cin >> trainingname;
-			cout << "you are looking for students who have completed \n" << "\n training.";
-		}
 		// Stop. Please Stop.
-
-		GetL00py = false;
+		if (option1 == 3)
+		{
+			GetL00py = false;
+		}
 	};
 	return (0);
+}
+
+//YearTimeFinder function
+int YearTimeFinder(int(TimePar))
+{
+	float SecondsSince1970 = time(NULL);
+	float DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
+	float YearsSince1970 = DaysSince1970 / 365.25;//number of years
+	float ThisYearFloat = 1970 + YearsSince1970;
+	int ThisYearInt = static_cast<int>(ThisYearFloat);
+	int FebruaryDays = 0;
+
+	//Find number of seconds since new years
+	float SecondsSinceNewYears = SecondsSince1970 - (static_cast<float>(ThisYearInt) - 1970) * 60 * 60 * 24 * 365.25;
+	int DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
+
+	//Month Name
+
+	//Check for leap year
+
+	int LeapYearCheck = ThisYearInt - 1972; // First leap year since 1970: 1972
+
+	if (LeapYearCheck % 4 == 0)
+	{
+		int FebruaryDays = 29;
+	}
+	else
+	{
+		int FebruaryDays = 28;
+	}
+	//Find the month
+	string CurrentMonthName[13] = { "SecretLevelMonth", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+	int CurrentMonthDaysSum[13] = { 9, 31, FebruaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+	double Today[3] = { 2, 15, ThisYearInt };
+
+	cout << YearTimeFinder(time(NULL));
+	//Identify Semester
+	float CurrentSemester = 2019.0;
+	return (ThisYearInt);
 }
