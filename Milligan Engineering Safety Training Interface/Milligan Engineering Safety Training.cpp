@@ -28,7 +28,7 @@ int main()
 	//Identify Today's Date
 
 	double Today[3] = { 2, 15, 2019 };
-/*	double now = time(NULL);*/
+	double now = time(NULL);
 
 	float CurrentSemester = 2019.0;
 
