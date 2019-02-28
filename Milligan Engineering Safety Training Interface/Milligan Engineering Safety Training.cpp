@@ -11,7 +11,9 @@ Most recent changes made on: 24 February 2019
 #include <time.h>
 using namespace std;
 
-//Declare some global variables for the main function
+//Start Main function
+int main()
+{
 
 int ThisYearInt;
 float CurrentSemester;
@@ -19,9 +21,8 @@ float CurrentSemester;
 
 //Programmer Defined Function Prototypes
 
-int YearTimeFinder(int (TimePar));
-//Precondition: Uses Time(Null), the number of seconds since 0:00 January 1 1970.
-//Postconidtion: Gives the current year (will later give day, month, and year)
+	double Today[3] = { 2, 15, 2019 };
+/*	double now = time(NULL);*/
 
 //Start Main function
 int main()
