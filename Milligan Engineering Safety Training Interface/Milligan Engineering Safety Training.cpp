@@ -10,6 +10,9 @@ Most recent changes made on: 24 February 2019
 #include <string>
 #include <time.h>
 using namespace std;
+// Be sure to delete you old repository.
+// String and calculation OK
+
 
 //Start Main function
 int main()
@@ -114,7 +117,11 @@ int main()
 				GetL00py = false;
 			}
 
-			//Check for Student's Training
+      			//Check for Student's Training
+
+					// training array: {0: solder trained? 1 or 0, 1: Month solder trained, 2: Day solder trained, 3: Year solder trained, 4: toolbox trained?, 5: Month toolbox trained, 6: Day toolbox trainined, 7: Year toolbox trained}
+		//if (studentname = 'Bob'){
+			int Training[8] = { 1, 1, 20, 2019, 0, 0, 0, 0 };
 
 			//3D Printing
 			if (ThreeDPrint[studentnumber] == CurrentSemester)
