@@ -2,7 +2,7 @@
 Project Name: Milligan Engineering Safety Training Interface
 Author: Henry Holben
 Description: A convenient interface that will allow Milligan College Engineering proffessors to check for students' lab equipment safety training
-Most recent changes made on: 24 February 2019
+Most recent changes made on: 1 March 2019
 */
 
 //set up
@@ -11,62 +11,69 @@ Most recent changes made on: 24 February 2019
 #include <time.h>
 using namespace std;
 
-//Declare some global variables for the main function
+//Global Variables
 
 int ThisYearInt;
 float CurrentSemester;
+int TimePar;
+int ListPar;
 
+	// StudentProfiles
+
+const int NumberOfStudents = 10; //we will use this to identify 9 students
+int StudentNumbersArray[NumberOfStudents] = { 0, 1, 2, 3,4, 5, 6, 7, 8, 9 };
+string StudentNamesArray[NumberOfStudents] = { "Brutus Buffalo", "Bob", "Sue", "Joe" };
+//Trainings:
+
+
+//Uses .5 for fall, 0.3 for Summer, and .0 for spring semesters
+
+		/*
+		Bob (1) was trained last august. His certifications have expired
+		Eve (2) was trained in January. Her certifications are current.
+		Joe (3) was never trained in anything
+		*/
+const int NumberOfTrainings = 6;
+string TrainingNamesArray[NumberOfTrainings] = {"3D Printing", "Drill Press", "Mechanical 1 Fundamental Toolbox", "Band Saw", "Circular Saw", "Electrical 1: Soldering and Crimping"};
+float ThreeDPrint[NumberOfStudents] = { 2019.0, 2018.5, 2019.0 }; //3D Printing
+float DrillPress[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Drill Press
+float FundToolBox[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Mechanical 1 (Fundamental Toolbox)
+float SawBand[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Band Saw
+float SawCircular[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Circular Saw
+float Solder[NumberOfStudents] = { 0, 2018.5, 2018.0 }; // Soldering and Crimping
 
 //Programmer Defined Function Prototypes
 
-int YearTimeFinder(int (TimePar));
+void YearTimeFinder(int(TimePar));
 //Precondition: Uses Time(Null), the number of seconds since 0:00 January 1 1970.
 //Postconidtion: Gives the current year (will later give day, month, and year)
+
+void listPrinter(int(ListPar));
+//Precondition: User chooses option 4
+//Post condition: Lists all studnets and trainings that have been entered into the system
 
 //Start Main function
 int main()
 {
-
-
-
 	//Say what day it is
-	int YearTimeFinder(time(NULL));
+	YearTimeFinder(TimePar);
+
 	cout << "Today's date is:" << ThisYearInt;
 	cout << "\n";
 
-	// StudentProfiles
-	const int NumberOfStudents = 10; //we will use this to identify 9 students
-	int StudentNumbersArray[NumberOfStudents] = { 0, 1, 2, 3,4, 5, 6, 7, 8, 9 };
-	string StudentNamesArray[NumberOfStudents] = { "Brutus Buffalo", "Bob", "Sue", "Joe" };
-	//Trainings:
-
-
-	//Uses .5 for fall, 0.3 for Summer, and .0 for spring semesters
-
-			/*Bob (1) was trained last august. His certifications have expired
-			Eve (2) was trained in January. Her certifications are current.
-			Joe(3) was never trained in anything
-			*/
-
-	float ThreeDPrint[NumberOfStudents] = { 2019.0, 2018.5, 2019.0 }; //3D Printing
-	float DrillPress[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Drill Press
-	float FundToolBox[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Mechanical 1 (Fundamental Toolbox)
-	float SawBand[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Band Saw
-	float SawCircular[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Circular Saw
-	float Solder[NumberOfStudents] = { 0, 2018.5, 2018.0 }; // Soldering and Crimping
 
 	//Title
 	cout << "_____________________________________________\n";
 	cout << "Milligan Engineering Safety Training Database\n";
 	cout << "_____________________________________________\n \n";
-	
+
 	// Get Loopy
 	bool GetL00py;
 	GetL00py = true;
 	while (GetL00py)
 	{
 		// Declare some variables for the loop
-		int option1=0;
+		int option1 = 0;
 		int studentnumber;
 		string studentname;
 		string trainingname;
@@ -78,15 +85,12 @@ int main()
 		cout << "Students or Training?";
 		cout << "\n Students \t 1";
 		cout << "\n Training \t 2";
-		cout << "\n Quit \t \t 3 \n \n";
+		cout << "\n Quit \t \t 3";
+		cout << "\n Print all \t 4 \n \n";
 		cout << "------------------------------- \n";
 		cin >> option1;
 
 		//But what if the user enters the wrong value type?
-
-	
-		
-
 
 		//Let's find some students
 
@@ -131,65 +135,71 @@ int main()
 
 			cout << studentname << "\t has completed \t \n \n \n";
 		}
-			//let's see who's trained
+		//let's see who's trained
 		if (option1 == 2) {
-				cout << "--------------Training-------------- \n";
-				cout << "What training are you interested in? \n";
-				cout << "\n \t 3d Printing \t 1";
-				cout << "\n \t Drill Press \t 2";
-				cout << "\n \t Mechanical 1 Fundamental Toolbox \t 3";
-				cout << "\n \t Band saw \t 4";
-				cout << "\n \t Circular saw \t 5";
-				cout << "\n \t Soldering and crimping \t 6 \n \n";
-				cout << "------------------------------------ \n";
-				cin >> TrainingNumber;
+			cout << "--------------Training-------------- \n";
+			cout << "What training are you interested in? \n";
+			cout << "\n \t 3d Printing \t 1";
+			cout << "\n \t Drill Press \t 2";
+			cout << "\n \t Mechanical 1 Fundamental Toolbox \t 3";
+			cout << "\n \t Band saw \t 4";
+			cout << "\n \t Circular saw \t 5";
+			cout << "\n \t Soldering and crimping \t 6 \n \n";
+			cout << "------------------------------------ \n";
+			cin >> TrainingNumber;
 
-				//3d printing
-				if (TrainingNumber = 1)
+			//3d printing
+			if (TrainingNumber = 1)
+			{
+				// Find students with current 3d printing training
+				cout << "\t Students with current training in 3d printing: \n \n";
+				for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
 				{
-					// Find students with current 3d printing training
-					cout << "\t Students with current training in 3d printing: \n \n";
-					for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
+					if (ThreeDPrint[StudentSearchIteration] == CurrentSemester)
 					{
-						if (ThreeDPrint[StudentSearchIteration] == CurrentSemester)
+						cout << StudentNamesArray[StudentSearchIteration];
+						cout << "\n";
+					};
+				};
+				//Find students with expired 3d-printing training
+				cout << "\t Students with outdated training in 3d printing: \n \n";
+				for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
+				{
+					if (ThreeDPrint[StudentSearchIteration] != CurrentSemester)
+					{
+						if (ThreeDPrint[StudentSearchIteration] != 0)
 						{
 							cout << StudentNamesArray[StudentSearchIteration];
 							cout << "\n";
-						};
+						}
 					};
-					//Find students with expired 3d-printing training
-					cout << "\t Students with outdated training in 3d printing: \n \n";
-					for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
-					{
-						if (ThreeDPrint[StudentSearchIteration] != CurrentSemester)
-						{
-							if (ThreeDPrint[StudentSearchIteration] != 0)
-							{
-								cout << StudentNamesArray[StudentSearchIteration];
-								cout << "\n";
-							}
-						};
-						StudentSearchIteration++;
-					};
+					StudentSearchIteration++;
 				};
-			}
+			};
+		}
 		// Stop. Please Stop.
 		if (option1 == 3)
 		{
 			GetL00py = false;
 		}
+		if (option1==4)
+		{			
+
+			listPrinter(ListPar);
+		}
+
 	};
 	return (0);
 }
 
 //YearTimeFinder function
-int YearTimeFinder(int(TimePar))
+void YearTimeFinder(int(TimePar))
 {
 	float SecondsSince1970 = time(NULL);
 	float DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
 	float YearsSince1970 = DaysSince1970 / 365.25;//number of years
 	float ThisYearFloat = 1970 + YearsSince1970;
-	int ThisYearInt = static_cast<int>(ThisYearFloat);
+	ThisYearInt = static_cast<int>(ThisYearFloat);
 	int FebruaryDays = 0;
 
 	//Find number of seconds since new years
@@ -216,8 +226,27 @@ int YearTimeFinder(int(TimePar))
 
 	double Today[3] = { 2, 15, ThisYearInt };
 
-	cout << YearTimeFinder(time(NULL));
 	//Identify Semester
-	float CurrentSemester = 2019.0;
-	return (ThisYearInt);
+	CurrentSemester = static_cast<float>(ThisYearInt);
+	return ;
 }
+
+//listPrinter Function
+void listPrinter(int(ListPar))
+{
+	//List all students
+	cout << "Students Enrolled: \n";
+	for (int i = 0; i < NumberOfStudents;i++)
+	{
+		cout << "\t" << StudentNamesArray[i]<< "\n";
+	}
+	//list all trainings
+	cout << "Trainings Enrolled: \n";
+		for (int i = 0; i < NumberOfTrainings;i++)
+		{
+			cout << "\t " << TrainingNamesArray[i] << "\n";
+		}
+
+	return;
+}
+
