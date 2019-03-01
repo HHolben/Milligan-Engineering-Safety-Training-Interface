@@ -17,9 +17,8 @@ using namespace std;
 //Global Variables
 
 int ThisYearInt;
-float CurrentSemester;
+double CurrentSemester;
 int TimePar;
-int ListPar;
 
 	// StudentProfiles
 
@@ -38,12 +37,12 @@ string StudentNamesArray[NumberOfStudents] = { "Brutus Buffalo", "Bob", "Sue", "
 		*/
 const int NumberOfTrainings = 6;
 string TrainingNamesArray[NumberOfTrainings] = {"3D Printing", "Drill Press", "Mechanical 1 Fundamental Toolbox", "Band Saw", "Circular Saw", "Electrical 1: Soldering and Crimping"};
-float ThreeDPrint[NumberOfStudents] = { 2019.0, 2018.5, 2019.0 }; //3D Printing
-float DrillPress[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Drill Press
-float FundToolBox[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Mechanical 1 (Fundamental Toolbox)
-float SawBand[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Band Saw
-float SawCircular[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Circular Saw
-float Solder[NumberOfStudents] = { 0, 2018.5, 2018.0 }; // Soldering and Crimping
+double ThreeDPrint[NumberOfStudents] = { 2019.0, 2018.5, 2019.0 }; //3D Printing
+double DrillPress[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Drill Press
+double FundToolBox[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Mechanical 1 (Fundamental Toolbox)
+double SawBand[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Band Saw
+double SawCircular[NumberOfStudents] = { 0, 2018.5, 2018.0 }; //Circular Saw
+double Solder[NumberOfStudents] = { 0, 2018.5, 2018.0 }; // Soldering and Crimping
 
 //Programmer Defined Function Prototypes
 
@@ -51,7 +50,7 @@ void YearTimeFinder(int(TimePar));
 //Precondition: Uses Time(Null), the number of seconds since 0:00 January 1 1970.
 //Postconidtion: Gives the current year (will later give day, month, and year)
 
-void listPrinter(int(ListPar));
+void listPrinter(string StudentNamesArray[], int NumberOfStudents);
 //Precondition: User chooses option 4
 //Post condition: Lists all studnets and trainings that have been entered into the system
 
@@ -191,8 +190,10 @@ int main()
 		}
 		if (option1==4)
 		{			
-
-			listPrinter(ListPar);
+			cout << "Students Enrolled: \n";
+			listPrinter(StudentNamesArray, NumberOfStudents);
+			cout << "Trainings Enrolled: \n";
+			listPrinter(TrainingNamesArray, NumberOfTrainings);
 		}
 
 	};
@@ -202,15 +203,15 @@ int main()
 //YearTimeFinder function
 void YearTimeFinder(int(TimePar))
 {
-	float SecondsSince1970 = time(NULL);
-	float DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
-	float YearsSince1970 = DaysSince1970 / 365.25;//number of years
-	float ThisYearFloat = 1970 + YearsSince1970;
-	ThisYearInt = static_cast<int>(ThisYearFloat);
+	double SecondsSince1970 = time(NULL);
+	double DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
+	double YearsSince1970 = DaysSince1970 / 365.25;//number of years
+	double ThisYeardouble = 1970 + YearsSince1970;
+	ThisYearInt = static_cast<int>(ThisYeardouble);
 	int FebruaryDays = 0;
 
 	//Find number of seconds since new years
-	float SecondsSinceNewYears = SecondsSince1970 - (static_cast<float>(ThisYearInt) - 1970) * 60 * 60 * 24 * 365.25;
+	double SecondsSinceNewYears = SecondsSince1970 - (static_cast<double>(ThisYearInt) - 1970) * 60 * 60 * 24 * 365.25;
 	int DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
 
 	//Month Name
@@ -234,24 +235,18 @@ void YearTimeFinder(int(TimePar))
 	double Today[3] = { 2, 15, ThisYearInt };
 
 	//Identify Semester
-	CurrentSemester = static_cast<float>(ThisYearInt);
+	CurrentSemester = static_cast<double>(ThisYearInt);
 	return ;
 }
 
 //listPrinter Function
-void listPrinter(int(ListPar))
+void listPrinter (string NamesArray[], int NumberOfNames)
 {
-	//List all students
-	cout << "Students Enrolled: \n";
-	for (int i = 0; i < NumberOfStudents;i++)
-	{
-		cout << "\t" << StudentNamesArray[i]<< "\n";
-	}
+
 	//list all trainings
-	cout << "Trainings Enrolled: \n";
-		for (int i = 0; i < NumberOfTrainings;i++)
+		for (int i = 0; i < NumberOfNames;i++)
 		{
-			cout << "\t " << TrainingNamesArray[i] << "\n";
+			cout << "\t " << NamesArray[i] << "\n";
 		}
 
 	return;
