@@ -2,16 +2,15 @@
 Project Name: Milligan Engineering Safety Training Interface
 Author: Henry Holben
 Description: A convenient interface that will allow Milligan College Engineering proffessors to check for students' lab equipment safety training
-Most recent changes made on: 1 March 2019
+Most recent changes made on: 15 March 2019
 */
 
 //set up
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <time.h>
 using namespace std;
-// Be sure to delete you old repository.
-// String and calculation OK
 
 
 //Global Variables
@@ -19,7 +18,10 @@ using namespace std;
 int ThisYearInt;
 double CurrentSemester;
 int TimePar;
-
+string CurrentMonth;
+int DayOfMonth;
+int DaysSinceNewYears;
+double ThreeDPrintOne;
 	// StudentProfiles
 
 const int NumberOfStudents = 10; //we will use this to identify 9 students
@@ -35,6 +37,9 @@ string StudentNamesArray[NumberOfStudents] = { "Brutus Buffalo", "Bob", "Sue", "
 		Eve (2) was trained in January. Her certifications are current.
 		Joe (3) was never trained in anything
 		*/
+
+
+
 const int NumberOfTrainings = 6;
 string TrainingNamesArray[NumberOfTrainings] = {"3D Printing", "Drill Press", "Mechanical 1 Fundamental Toolbox", "Band Saw", "Circular Saw", "Electrical 1: Soldering and Crimping"};
 double ThreeDPrint[NumberOfStudents] = { 2019.0, 2018.5, 2019.0 }; //3D Printing
@@ -51,16 +56,38 @@ void YearTimeFinder(int(TimePar));
 //Postconidtion: Gives the current year (will later give day, month, and year)
 
 void listPrinter(string StudentNamesArray[], int NumberOfStudents);
-//Precondition: User chooses option 4
+//Precondition: Uses an array of strings and the integer of entries in that array
 //Post condition: Lists all studnets and trainings that have been entered into the system
 
 //Start Main function
 int main()
 {
+	using namespace std;
+
+	//File input
+
+	//3D Print
+
+	ifstream inStream;
+	inStream.open("ThreeDPrintTest.txt", ios::in);
+	double ThreeDPrintOne;
+	inStream >>  ThreeDPrintOne;          
+	if (inStream.is_open())
+	{
+		cout << "InStream is working. " << ThreeDPrintOne <<"\n";
+	}
+
+	inStream.close();
+
+
 	//Say what day it is
 	YearTimeFinder(TimePar);
+	cout << "Day" << DaysSinceNewYears << "\n";
+	cout << "Day of this Month: " << DayOfMonth<<"\n";
 
-	cout << "Today's date is:" << ThisYearInt;
+
+
+	cout << "Today's date is:" << " "<< DayOfMonth <<" "<< CurrentMonth <<" "<< ThisYearInt;
 	cout << "\n";
 
 
@@ -87,8 +114,9 @@ int main()
 		cout << "Students or Training?";
 		cout << "\n Students \t 1";
 		cout << "\n Training \t 2";
-		cout << "\n Quit \t \t 3";
-		cout << "\n Print all \t 4 \n \n";
+		cout << "\n Print all \t 3";
+		cout << "\n Quit \t \t 4 \n \n";
+
 		cout << "------------------------------- \n";
 		cin >> option1;
 
@@ -154,48 +182,68 @@ int main()
 			cout << "------------------------------------ \n";
 			cin >> TrainingNumber;
 
-			//3d printing
-			if (TrainingNumber = 1)
-			{
+			//Trainings
+			
+				//Identify what training has been selected
+				string TrainingName = TrainingNamesArray[TrainingNumber-1];
+
+
 				// Find students with current 3d printing training
-				cout << "\t Students with current training in 3d printing: \n \n";
+				cout << "\t Students with current training in " << TrainingNamesArray[TrainingNumber-1]<<": \n \n";
 				for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
 				{
-					if (ThreeDPrint[StudentSearchIteration] == CurrentSemester)
+					if (TrainingName[StudentSearchIteration] == CurrentSemester)
 					{
 						cout << StudentNamesArray[StudentSearchIteration];
 						cout << "\n";
 					};
 				};
 				//Find students with expired 3d-printing training
-				cout << "\t Students with outdated training in 3d printing: \n \n";
+				cout << "\t Students with outdated training in " << TrainingNamesArray[TrainingNumber - 1] << ": \n \n";
 				for (int StudentSearchIteration = 0; StudentSearchIteration <= NumberOfStudents; StudentSearchIteration++)
 				{
-					if (ThreeDPrint[StudentSearchIteration] != CurrentSemester)
+					if (TrainingName[StudentSearchIteration] != CurrentSemester)
 					{
-						if (ThreeDPrint[StudentSearchIteration] != 0)
+						if (TrainingName[StudentSearchIteration] != 0)
 						{
-							cout << StudentNamesArray[StudentSearchIteration];
+							cout << StudentNamesArray[StudentSearchIteration]<<":\t"<< TrainingName[StudentSearchIteration];
+
 							cout << "\n";
 						}
 					};
 					StudentSearchIteration++;
 				};
-			};
 		}
-		// Stop. Please Stop.
+		//Dump students and trainings enrolled
 		if (option1 == 3)
 		{
-			GetL00py = false;
-		}
-		if (option1==4)
-		{			
+			ThreeDPrintOne = 1.0;
 			cout << "Students Enrolled: \n";
 			listPrinter(StudentNamesArray, NumberOfStudents);
 			cout << "Trainings Enrolled: \n";
 			listPrinter(TrainingNamesArray, NumberOfTrainings);
-		}
+			//File output
 
+			ofstream outStream;
+			outStream.open(("Milligan Engineering Safety Training List.txt"), ios::out);
+
+			if (outStream.is_open())
+			{
+				outStream << ThreeDPrintOne;
+				cout << "The Write out list has been updated. \n";
+
+			}
+
+			outStream.close();
+
+
+		}
+		// Stop. Please Stop.
+		if (option1 == 4)
+		{
+			GetL00py = false;
+		}
+	
 	};
 	return (0);
 }
@@ -212,9 +260,9 @@ void YearTimeFinder(int(TimePar))
 
 	//Find number of seconds since new years
 	double SecondsSinceNewYears = SecondsSince1970 - (static_cast<double>(ThisYearInt) - 1970) * 60 * 60 * 24 * 365.25;
-	int DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
 
-	//Month Name
+	//Identify Day of the Year
+	DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
 
 	//Check for leap year
 
@@ -228,27 +276,45 @@ void YearTimeFinder(int(TimePar))
 	{
 		int FebruaryDays = 28;
 	}
-	//Find the month
+	//Identify Month
 	string CurrentMonthName[13] = { "SecretLevelMonth", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-	int CurrentMonthDaysSum[13] = { 9, 31, FebruaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	int CurrentMonthDaysSum[13] = { 0, 31, FebruaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	int SumofMonthDays[14] = { 0, 31, 31 + FebruaryDays, 62 + FebruaryDays, 92 + FebruaryDays, 123 + FebruaryDays, 153 + FebruaryDays, 184 + FebruaryDays, 215 + FebruaryDays, 245 + FebruaryDays, 276 + FebruaryDays, 306 + FebruaryDays,337+FebruaryDays};
+	int PriorMonthsDays = 0;
+	int MonthDayCheck;
+	for (int MonthSearchIteration = 1; MonthSearchIteration <= 13; MonthSearchIteration++)//Searches through months until the right month is identified
+	{
+		if (SumofMonthDays[MonthSearchIteration] <= DaysSinceNewYears)
+		{
+			if (DaysSinceNewYears <= SumofMonthDays[MonthSearchIteration+1])
+			{
+				CurrentMonth = CurrentMonthName[MonthSearchIteration];
+				DayOfMonth = DaysSinceNewYears- SumofMonthDays[MonthSearchIteration]+MonthSearchIteration;
+			}
+		}			
+	}
+	//Identify Day of the Month
 
-	double Today[3] = { 2, 15, ThisYearInt };
+
+
+
+	double Today[3] = { 2, DayOfMonth, ThisYearInt };
 
 	//Identify Semester
 	CurrentSemester = static_cast<double>(ThisYearInt);
+
+
 	return ;
 }
 
 //listPrinter Function
 void listPrinter (string NamesArray[], int NumberOfNames)
 {
-
-	//list all trainings
+	//Dump all trainings and students 
 		for (int i = 0; i < NumberOfNames;i++)
 		{
 			cout << "\t " << NamesArray[i] << "\n";
 		}
-
 	return;
 }
 
