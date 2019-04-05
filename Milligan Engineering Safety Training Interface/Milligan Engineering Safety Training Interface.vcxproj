@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dateClass.cpp" />
     <ClCompile Include="Milligan Engineering Safety Training.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dateClass.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

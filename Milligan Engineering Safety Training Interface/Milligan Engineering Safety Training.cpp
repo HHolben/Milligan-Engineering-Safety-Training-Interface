@@ -2,7 +2,7 @@
 Project Name: Milligan Engineering Safety Training Interface
 Author: Henry Holben
 Description: A convenient interface that will allow Milligan College Engineering proffessors to check for students' lab equipment safety training
-Most recent changes made on: 21 March 2019
+Most recent changes made on: 25 March 2019
 */
 
 //set up
@@ -69,14 +69,23 @@ int main()
 
 	//3D Print
 
+
 	ifstream inStream;
-	inStream.open("ThreeDPrintTest.txt", ios::in);
-	double ThreeDPrintOne;
-	inStream >> ThreeDPrintOne;
+	inStream.open("MilliganSafetyContract.csv", ios::in);
+	string FirstEntry;
+	inStream >> FirstEntry;
+
 	if (inStream.is_open())
 	{
-		cout << "InStream is working. " << ThreeDPrintOne << "\n";
+
+		cout << "InStream is working. " << FirstEntry << "\n";
+
 	}
+	else
+	{
+		cout << "InStream is not working. \n";
+	}
+
 
 	inStream.close();
 
@@ -126,7 +135,6 @@ int main()
 		{
 			cin.clear(); //clears the bad input
 			cin.ignore(numeric_limits<streamsize>::max(), '\n'); //ignores the bad input
-			cout << "\n Hi Tim. \n";//Sayes hi to Tim
 		}
 
 
@@ -135,7 +143,7 @@ int main()
 
 		//Let's find some students
 
-		if (option1 == 1) 
+		if (option1 == 1)
 		{
 			cout << "--------------Students-------------- \n";
 			cout << "\n \n Who are you looking for? \n";
@@ -144,7 +152,7 @@ int main()
 
 			// Relate input name to a number
 			int NameSearchIteration;
-			for (NameSearchIteration = 0;NameSearchIteration <= NumberOfStudents+1;NameSearchIteration++)
+			for (NameSearchIteration = 0;NameSearchIteration <= NumberOfStudents + 1;NameSearchIteration++)
 			{
 				if (StudentNamesArray[NameSearchIteration] == studentname)
 				{
@@ -154,7 +162,6 @@ int main()
 				if (NameSearchIteration > NumberOfStudents)
 				{
 					"No student was found by that name.";
-					GetL00py = false;
 				}
 			};
 
@@ -167,7 +174,7 @@ int main()
 
 			//3D Printing
 			if (ThreeDPrint[studentnumber] == CurrentSemester)
-			{
+			{//Tim found error here- student number is being used without being initialized
 				cout << "\n" << studentname << " was trained in 3d Printing during the " << ThreeDPrint[studentnumber] << " semester. " << studentname << "'s training is current. \n";
 			}
 			if (ThreeDPrint[studentnumber] < CurrentSemester)
@@ -179,10 +186,12 @@ int main()
 				cout << "\n" << studentname << " was never trained in 3d Printing at Milligan. \n";
 			}
 
+
 			cout << studentname << "\t has completed \t \n \n \n";
 		}
 		//let's see who's trained
-		if (option1 == 2) {
+		if (option1 == 2) 
+		{
 			cout << "--------------Training-------------- \n";
 			cout << "What training are you interested in? \n";
 			cout << "\n \t 3d Printing \t 1";
@@ -193,6 +202,17 @@ int main()
 			cout << "\n \t Soldering and crimping \t 6 \n \n";
 			cout << "------------------------------------ \n";
 			cin >> TrainingNumber;
+
+			//But what if the user enters the wrong value type...again?
+			if (cin.fail()) //if cin fails 
+			{
+				cout << "\n Please enter a valid option number. \n";
+			}
+			//But what if someone enters a number out of range
+			if (TrainingNumber != 1 | 2 | 3 | 4 | 5 | 6)
+			{
+				cout << "\n Please enter a valid option number. \n";
+			}
 
 			//Trainings
 
@@ -225,6 +245,9 @@ int main()
 				};
 				StudentSearchIteration++;
 			};
+
+
+
 		}
 		//Dump students and trainings enrolled
 		if (option1 == 3)
@@ -245,10 +268,7 @@ int main()
 				cout << "The Write out list has been updated. \n";
 
 			}
-
 			outStream.close();
-
-
 		}
 		// Stop. Please Stop.
 		if (option1 == 4)
@@ -256,7 +276,7 @@ int main()
 			GetL00py = false;
 		}
 
-		if (option1 != (1||2||3||4))
+		if (option1 != (1 || 2 || 3 || 4))
 		{
 			cout << "\n Please enter an integer listed in the menu \n.";
 		}
@@ -282,7 +302,7 @@ void YearTimeFinder(int(TimePar))
 
 	//Identify Day of the Year
 	DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
-	
+
 
 	//Check for leap year
 
@@ -300,11 +320,11 @@ void YearTimeFinder(int(TimePar))
 	string CurrentMonthName[13] = { "SecretLevelMonth", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	int CurrentMonthDaysSum[13] = { 0, 31, FebruaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int SumofMonthDays[14] = { 0, 31, 31 + FebruaryDays, 62 + FebruaryDays, 92 + FebruaryDays, 123 + FebruaryDays, 153 + FebruaryDays, 184 + FebruaryDays, 215 + FebruaryDays, 245 + FebruaryDays, 276 + FebruaryDays, 306 + FebruaryDays,337 + FebruaryDays };
-	
-	int MonthDays[13][33] = 
+
+	int MonthDays[13][33] =
 	{
 		/*SecretLevelMonth*/{ 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0},
-		/*January:*/{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100}, 
+		/*January:*/{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100},
 		/*February*/{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,LeapYear,0, 0, 100},
 		/*March*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100},
 		/*April*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
@@ -321,8 +341,8 @@ void YearTimeFinder(int(TimePar))
 
 
 	int PriorMonthsDays = 0;
-	DayOfMonth =1;
-	int YearMonthCheck=1;
+	DayOfMonth = 1;
+	int YearMonthCheck = 1;
 	while (PriorMonthsDays < DaysSinceNewYears)
 	{
 
@@ -345,7 +365,7 @@ void YearTimeFinder(int(TimePar))
 	DayOfMonth--;
 
 	CurrentMonth = CurrentMonthName[YearMonthCheck];
-	
+
 
 
 
@@ -369,10 +389,6 @@ void listPrinter(string NamesArray[], int NumberOfNames)
 
 //SourceReaderFunction
 void SourceReader(int TimeStampArray[], string EmailAddressArray[], string SignatureArray[], int DateSignedArray[], string NamesArray[], string TraningsCompletedArray[], string FacultyorStudentArray[], string LabNameArray, string ProjectNameArray[]);
-
-
-
-
 
 
 
