@@ -21,9 +21,27 @@
     <ClCompile Include="dateClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Trainees.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TraineesClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dateClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardHeaderFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trainees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TraineesClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

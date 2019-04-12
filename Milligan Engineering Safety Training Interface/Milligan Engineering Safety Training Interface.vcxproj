@@ -21,9 +21,15 @@
   <ItemGroup>
     <ClCompile Include="dateClass.cpp" />
     <ClCompile Include="Milligan Engineering Safety Training.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Trainees.cpp" />
+    <ClCompile Include="TraineesClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dateClass.h" />
+    <ClInclude Include="StandardHeaderFile.h" />
+    <ClInclude Include="Trainees.h" />
+    <ClInclude Include="TraineesClass.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
