@@ -4,7 +4,7 @@
 
 class TraineesClass
 {
-
+	//Add inheritence: Create new classes for Students and Instructors
 
 
 public:
@@ -17,6 +17,8 @@ private:
 	string DateSigned[100];
 	string NameOfTraining[100];
 	string studentname;
+
+	
 
 
 };

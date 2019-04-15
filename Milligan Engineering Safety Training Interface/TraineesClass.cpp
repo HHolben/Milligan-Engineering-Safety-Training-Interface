@@ -2,13 +2,13 @@
 
 
 
-TraineesClass::TraineesClass()
+TraineesClass::TraineesClass()//constructor
 {
 
 }
 
 
-TraineesClass::~TraineesClass()
+TraineesClass::~TraineesClass()//destructor
 {
 }
 
