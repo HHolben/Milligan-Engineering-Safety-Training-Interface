@@ -2,7 +2,7 @@
 Project Name: Milligan Engineering Safety Training Interface
 Author: Henry Holben
 Description: A convenient interface that will allow Milligan College Engineering proffessors to check for students' lab equipment safety training
-Most recent changes made on: 1 March 2019
+Most recent changes made on: 15 March 2019
 */
 
 //set up
@@ -214,7 +214,7 @@ int main()
 }
 
 //YearTimeFinder function
-void YearTimeFinder(int(TimePar))
+YearTimeFinder(int(TimePar))
 {
 	double SecondsSince1970 = time(NULL);
 	double DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
@@ -248,7 +248,7 @@ void YearTimeFinder(int(TimePar))
 
 
 //listPrinter Function
-void listPrinter(int(ListPar))
+listPrinter(int(ListPar))
 {
 	//List all students
 	cout << "Students Enrolled: \n";
