@@ -25,17 +25,29 @@ Most recent changes made on: 9 May 2019
 //#pragma once
 using namespace std;
 
+void YearTimeFinder(int(TimePar));
+//Precondition: Uses Time(Null), the number of seconds since 0:00 January 1 1970.
+//Postconidtion: Gives the current year (will later give day, month, and year)
+
+void listPrinter(string StudentNamesArray[], int NumberOfStudents);
+//Precondition: Uses an array of strings and the integer of entries in that array
+//Post condition: Lists all studnets and trainings that have been entered into the system
+
+
+
 
 //Global Variables
 
-
-
-
 //Global variables for the seconds to date function
-
-
-
-
+int ThisYearInt;
+double CurrentSemester;
+int TimePar;
+string CurrentMonth;
+int DayOfMonth;
+int DaysSinceNewYears;
+double ThreeDPrintOne;
+int LeapYear;
+string studentname;
 
 //Global Variables for equipment
 struct Equipment
@@ -72,7 +84,6 @@ string ProjectName;
 
 
 
-string studentname;
 
 //class for using csv contract file:
 //class CSVContractFileVariables
@@ -124,129 +135,140 @@ int ProjectNameCSVColumn = 12;
 
 
 
-
-
-
 int main()
 {
-
-
 	//Say the date
+	YearTimeFinder(TimePar);
+	cout << "Day" << DaysSinceNewYears << "\n";
+	cout << "Day of this Month: " << DayOfMonth << "\n";
 
-	//class DateClass
-	//{
-	//public:
-		int ThisYearInt;
-		double CurrentSemester;
-		int Timepar;
-		string CurrentMonth;
-		int DayOfMonth;
-		int DaysSinceNewYears;
-		double ThreeDPrintOne;
-		int LeapYear;
+	cout << "Today's date is:" << " " << DayOfMonth << " " << CurrentMonth << " " << ThisYearInt;
+	cout << "\n";
 
+	//go through the safety contract
 
-		double SecondsSince1970 = time(NULL); //Uses time NULL to get the current date. 
-		double DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
-		double YearsSince1970 = DaysSince1970 / 365.25;//number of years
-		double ThisYeardouble = 1970 + YearsSince1970;
-		
-		int FebruaryDays = 0;
+//check if file is good
 
-	
+	int NumberOfColumns;
+	ifstream safetycontract;
+	safetycontract.open("MilliganSafetyContract.csv");
+
+	if (safetycontract.is_open())
+	{
+		//next? - look at page 355
+		cout << "InStream is working. \n";
 
 
+		//Assign file input to dynamic array
+			//PROBLEM: the file reads the first column incorrectly: to fix this we need to get it to detect a return at the end of the line.
+		int NumberOfColumns = 12;
+		int NumberOfRows = 50;
 
 
-		//Find number of seconds since new years
-		ThisYearInt = static_cast<int>(ThisYeardouble);
-		double SecondsSinceNewYears = SecondsSince1970 - (static_cast<float>(ThisYearInt) - 1970) * 60 * 60 * 24 * 365.25;
-		DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
+		//Lets build an array!
+		string DataArray[13][50];
 
-		//Month Name
 
-		//Check for leap year
 
-		int LeapYearCheck = ThisYearInt - 1972; // First leap year since 1970: 1972
 
-		if (LeapYearCheck % 4 == 0)
+		bool FoundNumberofRows = false;
+
+		int ColumnNumber = 1;
+		int RowNumber = 1;
+
+
+		//First we have to read the entire row
+		while (RowNumber <= NumberOfRows)
 		{
-			LeapYear = 0;
-		}
-		else
-		{
-			LeapYear = 29;
-		}
-		//Identify Month
-		string CurrentMonthName[13] = { "SecretLevelMonth", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-		int CurrentMonthDaysSum[13] = { 9, 31, FebruaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+			//	cout << "\n" << " (" << ColumnNumber << ", " << RowNumber << ") " << "\n \n";
 
-		int MonthDays[13][33] =
+			
 
 
-		{
-			/*SecretLevelMonth*/{ 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0},
-			/*January:*/{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100},
-			/*February*/{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28, LeapYear,0, 0, 100},
-			/*March*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100},
-			/*April*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
-			/*May*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
-			/*June*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
-			/*July*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
-			/*August*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
-			/*September*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
-			/*October*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
-			/*November*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
-			/*December*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 }
+			//Now we need to break the row up into comma seperated items
+
+			//Decide how long the arrays should be.
+
+			std::string Row;
+			getline(safetycontract, Row, '\n');
+
+			class BuildRowChar
+			{
+			public:
+				
+				void CountCommas(string Row)
+				{
+					
+					const int RowLength = 300; // .length finds the lenght of the string row
+					const int MaxStringLength = 20; //max length of strings to be stored 
+
+			
+					//set up an array to store all characters from the Row string
+					char RowChar[RowLength];
+					Row.copy(RowChar, Row.length() + 1);
+					
+
+
+					int NumberOfCommas = 0;
+
+					for (int RowCharCount = 0;RowCharCount <= RowLength + 1; RowCharCount++)//this for loop is for finding the number of columns
+					{
+						if (RowChar[RowCharCount] == 44) //checks if the index it is looking at contains an apostrophe or a return
+						{
+
+							//if it finds a comma, count it
+							NumberOfCommas++;
+							//cout <<NumberOfCommas<<"\n \n";
+
+							//We have the number of columns. Now 
+						}
+					}
+
+					//cout << "\n \n";
+
+// Now we make a similar For loop and use the now known number of commas to parse through the row and create small char arrays of each item
+
+					char ItemChar[MaxStringLength];//this  array holds a smaller 1d character array to convert into a string. Also note the 40 limits character in
+
+
+
+					for (int RowCharCount = 0;RowCharCount <= RowLength + 1; RowCharCount++)
+					{
+						//Now we to break the character array up into items
+
+
+
+						while (RowChar[RowCharCount] != 44) //unless this character is a comma, we want to put it in the little char array
+						{
+							ItemChar[RowCharCount] = RowChar[RowCharCount];
+							RowCharCount++;
+						}
+
+
+						cout << RowChar[RowCharCount];
+
+					return;
+					}
+
+
+
+				};
+
+
+
+
+
+
+			};
+
+
 		};
 
-		int SumofMonthDays[14] = { 0, 31, 31 + FebruaryDays, 62 + FebruaryDays, 92 + FebruaryDays, 123 + FebruaryDays, 153 + FebruaryDays, 184 + FebruaryDays, 215 + FebruaryDays, 245 + FebruaryDays, 276 + FebruaryDays, 306 + FebruaryDays,337 + FebruaryDays };
+
+	}
 
 
 
-		int PriorMonthsDays = 0;
-		DayOfMonth = 1;
-		int YearMonthCheck = 1;
-		while (PriorMonthsDays < DaysSinceNewYears)
-		{
-
-			/*if (MonthDays[YearMonthCheck][DayOfMonth] == 0)
-			{
-				DayOfMonth++;
-			}
-			*/
-
-			if (MonthDays[YearMonthCheck][DayOfMonth] == 0)
-
-			{
-				YearMonthCheck++;
-				DayOfMonth = 0;
-
-			}
-
-			DayOfMonth++;
-			PriorMonthsDays++;
-		}
-		DayOfMonth--;
-
-		CurrentMonth = CurrentMonthName[YearMonthCheck];
-
-		double Today[3] = { YearMonthCheck, DayOfMonth, ThisYearInt };
-
-
-
-		int SecondsSinceMidnight = SecondsSinceNewYears - PriorMonthsDays * 24 * 60 * 60;
-		int HoursSinceMidnight = SecondsSinceNewYears - PriorMonthsDays * 24 * 60 * 60;
-
-
-
-
-
-
-		//Identify Semester
-		CurrentSemester = static_cast<double>(ThisYearInt);
-
-	cout << "Today's Date is "<< YearMonthCheck <<" "<< DayOfMonth << " "<<ThisYearInt;
 
 
 
@@ -255,8 +277,6 @@ int main()
 
 	//check if file is good
 
-	int NumberOfColumns;
-	ifstream safetycontract;
 	safetycontract.open("MilliganSafetyContract.csv");
 
 
@@ -377,7 +397,7 @@ int main()
 				int option1 = 0;
 				int studentnumber;
 
-				string trainingname;
+				string *trainingname;//Uses a pointer
 				int TrainingNumber;
 				int reboot;
 
@@ -440,7 +460,7 @@ int main()
 						}
 					};
 
-					
+
 				}
 				//let's see who's trained
 				if (option1 == 2)
@@ -482,26 +502,26 @@ int main()
 
 					if (outStream.is_open())
 					{
-		
-						for (int RowSearchIteration=1; RowSearchIteration <= NumberOfRows; RowSearchIteration++)
+
+						for (int RowSearchIteration = 1; RowSearchIteration <= NumberOfRows; RowSearchIteration++)
 						{
 
 
-							for (int ColumnSearchIteration=1; ColumnSearchIteration <= NumberOfColumns; ColumnSearchIteration++)
+							for (int ColumnSearchIteration = 1; ColumnSearchIteration <= NumberOfColumns; ColumnSearchIteration++)
 							{
 								outStream << DataArray[ColumnSearchIteration][RowSearchIteration];
 								cout << "The Write out list has been updated. \n";
 
 							}
 
-							
+
 						}
 						outStream.close();
 
 
 					}
 
-				
+
 				}
 				// Stop. Please Stop.
 				if (option1 == 4)
@@ -513,28 +533,103 @@ int main()
 				{
 					cout << "\n Please enter an integer listed in the menu \n.";
 				}
-
-
-
 			};
-
-
-
-
 		}
-
-
-
-
 		return(0);
 	}
 };
 
 
+//YearTimeFinder function
+
+
+void YearTimeFinder(int(TimePar))
+{
+	double SecondsSince1970 = time(NULL);
+	double DaysSince1970 = ((SecondsSince1970 / 60) / 60) / 24;//number of days
+	double YearsSince1970 = DaysSince1970 / 365.25;//number of years
+	double ThisYeardouble = 1970 + YearsSince1970;
+	ThisYearInt = static_cast<int>(ThisYeardouble);
+	int FebruaryDays = 0;
+
+	//Find number of seconds since new years
+	double SecondsSinceNewYears = SecondsSince1970 - (static_cast<double>(ThisYearInt) - 1970) * 60 * 60 * 24 * 365.25;
+
+	//Identify Day of the Year
+	DaysSinceNewYears = static_cast<int>(SecondsSinceNewYears / (60 * 60 * 24)) + 1;
+
+
+	//Check for leap year
+
+	int LeapYearCheck = ThisYearInt - 1972; // First leap year since 1970: 1972
+
+	if (LeapYearCheck % 4 == 0)
+	{
+		LeapYear = 0;
+	}
+	else
+	{
+		LeapYear = 29;
+	}
+	//Identify Month
+	string CurrentMonthName[13] = { "SecretLevelMonth", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+	int CurrentMonthDaysSum[13] = { 0, 31, FebruaryDays, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	int SumofMonthDays[14] = { 0, 31, 31 + FebruaryDays, 62 + FebruaryDays, 92 + FebruaryDays, 123 + FebruaryDays, 153 + FebruaryDays, 184 + FebruaryDays, 215 + FebruaryDays, 245 + FebruaryDays, 276 + FebruaryDays, 306 + FebruaryDays,337 + FebruaryDays };
+
+	int MonthDays[13][33] =
+	{
+		/*SecretLevelMonth*/{ 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0},
+		/*January:*/{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100},
+		/*February*/{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,LeapYear,0, 0, 100},
+		/*March*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100},
+		/*April*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
+		/*May*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
+		/*June*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
+		/*July*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
+		/*August*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
+		/*September*/{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
+		/*October*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 },
+		/*November*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 100 },
+		/*December*/ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 100 }
+	};
+
+
+
+	int PriorMonthsDays = 0;
+	DayOfMonth = 1;
+	int YearMonthCheck = 1;
+	while (PriorMonthsDays < DaysSinceNewYears)
+	{
+
+		if (MonthDays[YearMonthCheck][DayOfMonth] == 0)
+		{
+			DayOfMonth++;
+		}
+
+		if (MonthDays[YearMonthCheck][DayOfMonth] == 100)
+
+		{
+			YearMonthCheck++;
+			DayOfMonth = 1;
+
+		}
+
+		DayOfMonth++;
+		PriorMonthsDays++;
+	}
+	DayOfMonth--;
+
+	CurrentMonth = CurrentMonthName[YearMonthCheck];
 
 
 
 
+	double Today[3] = { 2, DayOfMonth, ThisYearInt };
+
+	//Identify Semester
+	CurrentSemester = static_cast<double>(ThisYearInt);
+	return;
+}
 //listPrinter Function
 void listPrinter(string NamesArray[], int NumberOfNames)
 {
@@ -545,5 +640,4 @@ void listPrinter(string NamesArray[], int NumberOfNames)
 	}
 	return;
 }
-
 
